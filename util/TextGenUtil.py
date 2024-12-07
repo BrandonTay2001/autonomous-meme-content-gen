@@ -1,17 +1,17 @@
 from mistralai import Mistral
 
 class TextGenUtil:
-    def __init__(self, llmClient: Mistral, characterBio: str):
-        self.llmClient = llmClient
-        self.characterBio = characterBio
+    def __init__(self, llm_client: Mistral, character_bio: str):
+        self.llm_client = llm_client
+        self.character_bio = character_bio
 
-    def createTextTweetCaption(self):
-        tweet = self.llmClient.chat.complete(
+    def create_text_tweet_caption(self):
+        tweet = self.llm_client.chat.complete(
             model = "mistral-large-latest",
             messages = [
                 {
                     "role": "system",
-                    "content": "You are a tweet bot that personifies a specific character. You are tasked with creating a tweet that is consistent with the character's personality. The character bio is: " + self.characterBio
+                    "content": "You are a tweet bot that personifies a specific character. You are tasked with creating a tweet that is consistent with the character's personality. The character bio is: " + self.character_bio
                 }, 
                 {
                     "role": "user",
@@ -21,8 +21,8 @@ class TextGenUtil:
         )
         return tweet.choices[0].message.content
     
-    def createAccompanyingTextForImageTweet(self, imageCaption: str):
-        caption = self.llmClient.chat.complete(
+    def create_accompanying_text_for_image_tweet(self, image_caption: str):
+        caption = self.llm_client.chat.complete(
             model = "mistral-large-latest",
             messages = [
                 {
@@ -31,7 +31,7 @@ class TextGenUtil:
                 }, 
                 {
                     "role": "user",
-                    "content": f"Create an accompanying text for this! {imageCaption}"
+                    "content": f"Create an accompanying text for this! {image_caption}"
                 }
             ]
         )

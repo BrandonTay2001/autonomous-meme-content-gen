@@ -5,7 +5,7 @@ class ImageGenUtil:
         self.model = model
         self.prompt = ""
 
-    def generateImageFromTextCaption(self, caption: str):
+    def generate_image_from_text_caption(self, caption: str):
         output = replicate.run(
             self.model,
             input={
@@ -24,5 +24,5 @@ class ImageGenUtil:
         )
         return output[0]
     
-    def generateImageFromImagePrompt(self):
+    def generate_image_from_image_prompt(self):
         pass

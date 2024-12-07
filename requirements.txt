@@ -60,3 +60,4 @@ twikit
 replicate
 python-dotenv
 mistralai
+tweepy
