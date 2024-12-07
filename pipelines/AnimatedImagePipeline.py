@@ -2,18 +2,19 @@ from util.ContentIdeaGenerator import ContentIdeaGenerator
 from util.AudioGenUtil import AudioGenUtil
 from util.ImageGenUtil import ImageGenUtil
 import replicate
-from twikit import Client
+from tweepy import Client, API
 from pyht.client import Language
 import os
 import requests
 
 class AnimatedImagePipeline:
     def __init__(self, audio_gen_util: AudioGenUtil, content_idea_generator: ContentIdeaGenerator, 
-                 image_gen_util: ImageGenUtil, tweet_client: Client):
+                 image_gen_util: ImageGenUtil, tweet_client: Client, media_upload_client: API):
         self.audio_gen_util = audio_gen_util
         self.content_idea_generator = content_idea_generator
         self.image_gen_util = image_gen_util
         self.tweet_client = tweet_client
+        self.media_upload_client = media_upload_client
     
     def generate_animated_image(self, audio: bytearray, image_bytes):
         with open("assets/animated_image_img.png", "wb") as fi:
@@ -39,7 +40,7 @@ class AnimatedImagePipeline:
         video_bytes = bytearray(response.content)
         return video_bytes
 
-    async def generate_animated_image_tweet(self, lang: Language):
+    def generate_animated_image_tweet(self, lang: Language):
         script = self.content_idea_generator.generate_for_audio()
         audio = self.audio_gen_util.generate_audio(script, lang)
 
@@ -47,6 +48,6 @@ class AnimatedImagePipeline:
         image = self.image_gen_util.generate_image_from_text_caption(image_caption)
         
         video = self.generate_animated_image(audio, image)
-        video_id = await self.tweet_client.upload_media(video)
+        video_id = self.media_upload_client.media_upload(video)
 
-        await self.tweet_client.create_tweet(media_ids=[video_id])
+        self.tweet_client.create_tweet(media_ids=[video_id])
