@@ -1,0 +1,4 @@
+1. Obtain ~20 images and captions, captions and images should have same file names but different extensions, eg: 'image1.png' should correspond to 'image1.txt'
+2. Zip these iamges and captions together, upload to https://replicate.com/ostris/flux-dev-lora-trainer
+3. Set trigger word to chracter name, DO NOT SELECT autocaption!
+4. Set steps to 2000
