@@ -19,8 +19,10 @@ pipelines = ["text", "image", "animateImage"]
 
 with open('config/character-bio.txt', 'r', encoding='utf-8') as fb:
     character_bio = fb.read()
+fb.close()
 with open('config/image-prompt.txt', 'r', encoding='utf-8') as fip:
     image_prompt = fip.read()
+fip.close()
 
 text_gen_util = TextGenUtil(llm_client, character_bio)
 image_gen_util = ImageGenUtil(os.getenv("REPLICATE_LORA_MODEL"), image_prompt)
@@ -34,7 +36,9 @@ animate_image_tweet_pipeline = AnimatedImagePipeline(audio_gen_util, content_ide
                                                      image_gen_util, tweet_client, media_upload_client)
 
 def useRandomPipeline():
-    chosen_pipeline = random.choice(pipelines)
+    probabilities = [0.25, 0.50, 0.25]
+    chosen_pipeline = random.choices(pipelines, probabilities)[0]
+    print(f"Chosen pipeline: {chosen_pipeline}")
     if chosen_pipeline == "text":
         text_tweet_pipeline.generate_text_tweet()
     elif chosen_pipeline == "image":
@@ -43,6 +47,13 @@ def useRandomPipeline():
         animate_image_tweet_pipeline.generate_animated_image_tweet(Language.ENGLISH)
     return
 
-while True:
-    useRandomPipeline()
-    time.sleep(4 * 60 * 60)  # Sleep for 4 hours
+# while True:
+#     try:
+#         useRandomPipeline()
+#     except Exception as e:
+#         print(e)
+#     time.sleep(5 * 60)
+
+# while True:
+#     useRandomPipeline()
+#     time.sleep(1 * 60 * 60)  # Sleep for 1 hours

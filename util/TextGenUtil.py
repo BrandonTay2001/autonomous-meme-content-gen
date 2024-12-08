@@ -27,11 +27,11 @@ class TextGenUtil:
             messages = [
                 {
                     "role": "system",
-                    "content": "some system prompt"
+                    "content": "You are a bot that creates an accompanying text for an image tweet. You are given an image caption and a character bio. Do your best to generate a text that is consistent with the character's personality and the image caption. The character bio is: " + self.character_bio
                 }, 
                 {
                     "role": "user",
-                    "content": f"Create an accompanying text for this! {image_caption}"
+                    "content": f"Create an accompanying text for this! Texts should be from the POV of the character and what they would say. Keep texts less than 2 sentences long and do not return quotation marks, emojis and hashtags.\nCaption: {image_caption}"
                 }
             ]
         )
