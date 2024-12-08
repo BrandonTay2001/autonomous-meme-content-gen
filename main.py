@@ -47,13 +47,9 @@ def useRandomPipeline():
         animate_image_tweet_pipeline.generate_animated_image_tweet(Language.ENGLISH)
     return
 
-# while True:
-#     try:
-#         useRandomPipeline()
-#     except Exception as e:
-#         print(e)
-#     time.sleep(5 * 60)
-
-# while True:
-#     useRandomPipeline()
-#     time.sleep(1 * 60 * 60)  # Sleep for 1 hours
+while True:
+    try:
+        useRandomPipeline()
+    except Exception as e:
+        print(e)
+    time.sleep(1 * 60 * 60)     # sleep for 1 hour
